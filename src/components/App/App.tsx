@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { apiKey } from '../../apiKey';
-import RestaurantContainer from '../../containers/restaurantContainer/restaurantContainer'
+import RestaurantContainer from '../../containers/restaurantContainer/restaurantContainer';
+import { SearchForm } from '../SearchFrom/searchForm';
  
 
 const requestHeader: any = {
@@ -24,6 +25,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <h1>Restaurant Finder</h1>
+      <SearchForm />
       <RestaurantContainer />
     </div>
   );
