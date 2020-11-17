@@ -1,15 +1,40 @@
-import React from 'react'
-import './restaurantContainer.css'
+import React from 'react';
+import './restaurantContainer.css';
+import { SearchForm } from '../../components/SearchFrom/searchForm';
+import { RestaurantCard } from '../../components/RestaurantCard/restaurantCard';
+
+interface IndividualRestaurantData {
+  name: string,
+  city: string,
+  state: string,
+  telephone: string,
+  genre: string,
+}
 
 interface RestaurantContainerProps {
-  restaurants: Array<object>
+  restaurants: Array<IndividualRestaurantData> 
 }
 
 export const RestaurantContainer: React.FC<RestaurantContainerProps> = (props) => {
-  console.log(props.restaurants)
+
+  const displayRestaurants = () => {
+    return props.restaurants.map(restaurant => {
+      return(
+        <RestaurantCard 
+          name={restaurant.name}
+          city={restaurant.city}
+          state={restaurant.state}
+          telephone={restaurant.telephone}
+          genre={restaurant.genre}
+        />
+      )
+    })
+  }
+
     return(
       <div>
-        restaurantContainer
+        <SearchForm />
+        {displayRestaurants()}
       </div>
     )
 }
