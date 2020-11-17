@@ -1,15 +1,16 @@
 import React from 'react'
 import './restaurantContainer.css'
 
-class RestaurantContainer extends React.Component {
+interface RestaurantContainerProps {
+  restaurants: Array<object>
+}
 
-  render() {
+export const RestaurantContainer: React.FC<RestaurantContainerProps> = (props) => {
+  console.log(props.restaurants)
     return(
       <div>
         restaurantContainer
       </div>
     )
-  }
 }
 
-export default RestaurantContainer;
