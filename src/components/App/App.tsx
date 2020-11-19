@@ -9,7 +9,7 @@ const requestHeader: any = {
 }
 
 const App: React.FC = () => {
-  const [restaurants, getRestaurants] = useState<any>([]);
+  const [restaurants, getRestaurants] = useState([]);
   
   useEffect(() => {
     fetch('https://code-challenge.spectrumtoolbox.com/api/restaurants', {
@@ -23,7 +23,7 @@ const App: React.FC = () => {
     <div className="App">
       <h1>Restaurant Finder</h1>
       <RestaurantContainer
-        restaurants={restaurants}
+        allRestaurants={restaurants}
       />
     </div>
   );
