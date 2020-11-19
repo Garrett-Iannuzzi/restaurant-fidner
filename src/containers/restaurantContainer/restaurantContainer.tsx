@@ -2,6 +2,7 @@ import React from 'react';
 import './restaurantContainer.css';
 import { SearchForm } from '../../components/SearchFrom/searchForm';
 import { RestaurantCard } from '../../components/RestaurantCard/restaurantCard';
+import { apiKey } from '../../apiKey';
 
 interface IndividualRestaurantData {
   name: string,
@@ -16,9 +17,15 @@ interface RestaurantContainerProps {
 }
 
 export const RestaurantContainer: React.FC<RestaurantContainerProps> = (props) => {
+  
+  const alphabatizeRestaurants = (restaurantsToSort:Array<IndividualRestaurantData> ) => {
+    return restaurantsToSort.sort((a:any, b:any) => a.name > b.name ? 1 : -1);
+  }
+
 
   const displayRestaurants = () => {
-    return props.restaurants.map(restaurant => {
+    const sortedRestaurants = alphabatizeRestaurants(props.restaurants)
+    return sortedRestaurants.map((restaurant:any) => {
       return(
         <RestaurantCard 
           name={restaurant.name}

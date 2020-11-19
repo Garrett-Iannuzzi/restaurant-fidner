@@ -13,8 +13,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = (props) => {
   return (
     <div className="restaurant-card">
       <h2>{props.name}</h2>
-      <h3>{props.city}</h3>
-      <h4>{props.state}</h4>
+      <h3>{props.city}, {props.state}</h3>
       <h4>{props.telephone}</h4>
       <h4>Genre:</h4>
       <ul>
