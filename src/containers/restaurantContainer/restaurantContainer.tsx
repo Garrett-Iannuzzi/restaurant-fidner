@@ -29,10 +29,22 @@ export const RestaurantContainer: React.FC<RestaurantContainerProps> = ({ allRes
   };
 
   const paginateRestaurants = (selectedRestaurants:Array<IndividualRestaurantData>) => {
-    const startingPage = (selectedPage - 1) * 10;
+    const startingPage = selectedPage * 10;
     const endingPage = startingPage + 10;
     
     return selectedRestaurants.slice(startingPage, endingPage)
+  }
+
+  const filterByState = (stateSelection:string) => {
+    if (!selectedRestaurants) {
+      return allRestaurants.filter((resturant:any) => {
+        return resturant.state === stateSelection
+      })
+    } else {
+      return selectedRestaurants.filter((resturant:any) => {
+        return resturant.state === stateSelection
+      })
+    }
   }
 
 
@@ -55,10 +67,14 @@ export const RestaurantContainer: React.FC<RestaurantContainerProps> = ({ allRes
   };
 
     return(
-      <div>
-        <SearchForm />
+      <div className="restaurant-container">
+        <SearchForm
+          allRestaurants={allRestaurants}
+        />
         {console.log(selectedPage)}
-        { !selectedRestaurants ? displayRestaurants(selectedRestaurants) : displayRestaurants(allRestaurants) }
+        <div className="restaurant-cards-div">
+          { !selectedRestaurants ? displayRestaurants(selectedRestaurants) : displayRestaurants(allRestaurants) }
+        </div>
       </div>
     )
 }

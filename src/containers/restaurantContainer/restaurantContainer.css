@@ -1,0 +1,10 @@
+.restaurant-container {
+  display: flex;
+  flex-direction: row;
+  height: 20rem;
+  width: 100%;
+}
+
+.restaurant-cards-div {
+  width: 100%;
+}
