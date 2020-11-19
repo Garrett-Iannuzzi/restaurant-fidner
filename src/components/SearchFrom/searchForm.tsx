@@ -18,7 +18,7 @@ interface SearchFormProps {
 
 export const SearchForm: React.FC<SearchFormProps> = ({ allRestaurants }) => {
 
-  const displayStateSelections = () => {
+  const displayStateSelectionOptions = () => {
     return allRestaurants.map((restaurant: any) => {
       return (
         <label>
@@ -29,12 +29,45 @@ export const SearchForm: React.FC<SearchFormProps> = ({ allRestaurants }) => {
     })
   }
 
+  const getGenreSelectionOptions = () => {
+    const allGenreTypes:Array<string> = [];
+    const sortedGenreTypes:Array<string> = [];
+
+    allRestaurants.map((resturant:any) => {
+      allGenreTypes.push(resturant.genre.split(','))
+    })
+
+    allGenreTypes.flat().map((restaurant:any) => {
+      if (sortedGenreTypes.includes(restaurant)) {
+        return
+      }
+      sortedGenreTypes.push(restaurant)
+    })
+    return sortedGenreTypes
+  }
+
+  const displayGenreTypes = () => {
+    const genreList = getGenreSelectionOptions()
+    return genreList.map((genre:any) => {
+      return(
+        <label>
+          <input type="radio" value={genre.genre} checked={false} />
+          {genre}
+        </label>
+      )
+    })
+  }
+
 
 return (
   <form className="search-form">
     <label>Search by state:</label>
     <div className="state-radio-button-list">
-      {displayStateSelections()}
+      {displayStateSelectionOptions()}
+    </div>
+    <label>Search by genre:</label>
+    <div className="state-radio-button-list">
+      {displayGenreTypes()}
     </div>
     <button>Filter Search</button>
   </form>
