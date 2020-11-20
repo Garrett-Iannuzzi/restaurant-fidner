@@ -1,0 +1,11 @@
+.search-form {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: 30%;
+}
+
+.state-radio-button-list {
+  display: flex;
+  flex-direction: column;
+}

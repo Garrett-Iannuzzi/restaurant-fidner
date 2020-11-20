@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './restaurantContainer.css';
 import { SearchForm } from '../../components/SearchFrom/searchForm';
 import { RestaurantCard } from '../../components/RestaurantCard/restaurantCard';
+import { apiKey } from '../../apiKey';
 
 interface IndividualRestaurantData {
+  id: string,
   name: string,
   city: string,
   state: string,
@@ -12,15 +14,49 @@ interface IndividualRestaurantData {
 }
 
 interface RestaurantContainerProps {
-  restaurants: Array<IndividualRestaurantData> 
+  allRestaurants: Array<IndividualRestaurantData> 
 }
 
-export const RestaurantContainer: React.FC<RestaurantContainerProps> = (props) => {
+export const RestaurantContainer: React.FC<RestaurantContainerProps> = ({ allRestaurants }) => {
 
-  const displayRestaurants = () => {
-    return props.restaurants.map(restaurant => {
+  const [ selectedRestaurants, selectRestaurants ] = useState([]);
+  const [ selectedPage, selectPage ] = useState(1);
+
+
+
+  const alphabatizeRestaurants = (restaurantsToSort:Array<IndividualRestaurantData>) => {
+    return restaurantsToSort.sort((a:any, b:any) => a.name > b.name ? 1 : -1);
+  };
+
+  const paginateRestaurants = (selectedRestaurants:Array<IndividualRestaurantData>) => {
+    const startingPage = selectedPage * 10;
+    const endingPage = startingPage + 10;
+    
+    return selectedRestaurants.slice(startingPage, endingPage)
+  }
+
+  const filterByLocation:any = (locationSelection:string) => {
+    console.log('filter', locationSelection)
+    if (!selectedRestaurants) {
+      return allRestaurants.filter((resturant:any) => {
+        return resturant.state === locationSelection
+      })
+    } else {
+      return selectedRestaurants.filter((resturant:any) => {
+        return resturant.state === locationSelection
+      })
+    }
+    return 'Clicked'
+  }
+
+
+  const displayRestaurants = (restaurantsToSort:Array<IndividualRestaurantData>) => {
+    const sortedRestaurants = alphabatizeRestaurants(restaurantsToSort)
+    // const sortedRestaurantsByPage = paginateRestaurants(restaurantsToSort)
+    return sortedRestaurants.map((restaurant:any) => {
       return(
-        <RestaurantCard 
+        <RestaurantCard
+          key={restaurant.id} 
           name={restaurant.name}
           city={restaurant.city}
           state={restaurant.state}
@@ -29,12 +65,17 @@ export const RestaurantContainer: React.FC<RestaurantContainerProps> = (props) =
         />
       )
     })
-  }
+  };
 
     return(
-      <div>
-        <SearchForm />
-        {displayRestaurants()}
+      <div className="restaurant-container">
+        <SearchForm
+          filterByLocation={filterByLocation}
+          allRestaurants={allRestaurants}
+        />
+        <div className="restaurant-cards-div">
+          { !selectedRestaurants ? displayRestaurants(selectedRestaurants) : displayRestaurants(allRestaurants) }
+        </div>
       </div>
     )
 }
