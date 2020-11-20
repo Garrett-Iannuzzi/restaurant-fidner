@@ -17,12 +17,20 @@ interface SearchFormProps {
 
 export const SearchForm: React.FC<SearchFormProps> = ({ allRestaurants, filterByLocation }) => {
   const [selectedLocation, selectLocation] = useState('')
+  const [selectedGenre, selectGenre] = useState('')
+
 
   const handleLocationChange = (e: any) => {
     console.log(e.target.value)
     filterByLocation(e.target.value)
     selectLocation(e.target.value)
   }
+
+  // const handleGenreChange = (e: any) => {
+  //   console.log(e.target.value)
+  //   filterByLocation(e.target.value)
+  //   selectLocation(e.target.value)
+  // }
 
   const displayStateSelectionOptions = () => {
     const statesToDisplay:Array<string> = []
@@ -50,50 +58,50 @@ export const SearchForm: React.FC<SearchFormProps> = ({ allRestaurants, filterBy
     })
   }
 
-  // const getGenreSelectionOptions = () => {
-  //   const allGenreTypes:Array<string> = [];
-  //   const sortedGenreTypes:Array<string> = [];
+  const getGenreSelectionOptions = () => {
+    const allGenreTypes:Array<string> = [];
+    const sortedGenreTypes:Array<string> = [];
 
-  //   allRestaurants.map((resturant:any) => {
-  //     allGenreTypes.push(resturant.genre.split(','))
-  //   })
+    allRestaurants.map((resturant:any) => {
+      allGenreTypes.push(resturant.genre.split(','))
+    })
 
-  //   allGenreTypes.flat().map((restaurant:any) => {
-  //     if (sortedGenreTypes.includes(restaurant)) {
-  //       return
-  //     }
-  //     sortedGenreTypes.push(restaurant)
-  //   })
-  //   return sortedGenreTypes.sort()
-  // }
+    allGenreTypes.flat().map((restaurant:any) => {
+      if (sortedGenreTypes.includes(restaurant)) {
+        return
+      }
+      sortedGenreTypes.push(restaurant)
+    })
+    return sortedGenreTypes.sort()
+  }
 
-  // const displayGenreTypes = () => {
-  //   const genreList = getGenreSelectionOptions()
-  //   return genreList.map((genre:any) => {
-  //     return(
-  //       <label>
-  //         <input 
-  //           type="radio" 
-  //           value={genre.genre} 
-  //           checked={false} 
-  //         />
-  //         {genre}
-  //       </label>
-  //     )
-  //   })
-  // }
+  const displayGenreTypes = () => {
+    const genreList = getGenreSelectionOptions()
+    return genreList.map((genre:any) => {
+      return(
+        <label>
+          <input 
+            type="radio" 
+            value={genre.genre} 
+            checked={false} 
+          />
+          {genre}
+        </label>
+      )
+    })
+  }
 
 
   return (
     <form className="search-form">
-      <label>Search by state:</label>
+      <label>Search our resturants by state:</label>
       <div className="state-radio-button-list">
         {displayStateSelectionOptions()}
       </div>
-      {/* <label>Search by genre:</label>
-    <div className="state-radio-button-list">
-      {displayGenreTypes()}
-    </div> */}
+      <label>Search by genre:</label>
+      <div className="state-radio-button-list">
+        {displayGenreTypes()}
+      </div>
       <button>Filter Search</button>
     </form>
   )
