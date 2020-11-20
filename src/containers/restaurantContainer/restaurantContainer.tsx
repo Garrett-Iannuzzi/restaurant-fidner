@@ -35,23 +35,24 @@ export const RestaurantContainer: React.FC<RestaurantContainerProps> = ({ allRes
     return selectedRestaurants.slice(startingPage, endingPage)
   }
 
-  const filterByState = (stateSelection:string) => {
+  const filterByLocation:any = (locationSelection:string) => {
+    console.log('filter', locationSelection)
     if (!selectedRestaurants) {
       return allRestaurants.filter((resturant:any) => {
-        return resturant.state === stateSelection
+        return resturant.state === locationSelection
       })
     } else {
       return selectedRestaurants.filter((resturant:any) => {
-        return resturant.state === stateSelection
+        return resturant.state === locationSelection
       })
     }
+    return 'Clicked'
   }
 
 
   const displayRestaurants = (restaurantsToSort:Array<IndividualRestaurantData>) => {
     const sortedRestaurants = alphabatizeRestaurants(restaurantsToSort)
     // const sortedRestaurantsByPage = paginateRestaurants(restaurantsToSort)
-
     return sortedRestaurants.map((restaurant:any) => {
       return(
         <RestaurantCard
@@ -69,9 +70,9 @@ export const RestaurantContainer: React.FC<RestaurantContainerProps> = ({ allRes
     return(
       <div className="restaurant-container">
         <SearchForm
+          filterByLocation={filterByLocation}
           allRestaurants={allRestaurants}
         />
-        {console.log(selectedPage)}
         <div className="restaurant-cards-div">
           { !selectedRestaurants ? displayRestaurants(selectedRestaurants) : displayRestaurants(allRestaurants) }
         </div>
